@@ -1,0 +1,466 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Empreenda! – Crie sua empresa em 5 minutos</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body class="min-h-screen bg-slate-50 text-slate-800 antialiased selection:bg-indigo-100 selection:text-indigo-900">
+
+  <!-- Barra superior -->
+  <header class="no-print sticky top-0 z-30 bg-white/90 backdrop-blur border-b border-slate-200">
+    <div class="max-w-5xl mx-auto px-4 sm:px-6 h-16 flex items-center justify-between">
+      <div class="flex items-center gap-3">
+        <div id="header-badge" class="w-9 h-9 rounded-xl bg-indigo-600 text-white font-extrabold flex items-center justify-center shadow-sm transition-colors duration-300">
+          E!
+        </div>
+        <div>
+          <span class="font-extrabold text-slate-900 tracking-tight text-lg">Empreenda!</span>
+          <span class="hidden sm:inline-block ml-2 text-xs font-medium px-2 py-0.5 rounded-full bg-slate-100 text-slate-600">
+            Crie sua empresa em 5 minutos
+          </span>
+        </div>
+      </div>
+
+      <div class="flex items-center gap-3">
+        <div class="text-right hidden xs:block sm:block">
+          <div class="text-[11px] uppercase tracking-wider text-slate-400 font-semibold">Empresas na feira</div>
+          <div id="fair-counter" class="text-sm font-bold text-slate-700">0 criadas</div>
+        </div>
+        <button
+          type="button"
+          onclick="toggleHistoryModal()"
+          class="px-3 py-1.5 text-xs font-semibold rounded-lg border border-slate-200 hover:bg-slate-100 text-slate-700 transition cursor-pointer"
+        >
+          Histórico
+        </button>
+        <button
+          type="button"
+          onclick="resetWizard()"
+          class="px-3 py-1.5 text-xs font-semibold rounded-lg bg-slate-900 hover:bg-slate-800 text-white transition cursor-pointer"
+        >
+          Nova empresa
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <main class="max-w-4xl mx-auto px-4 sm:px-6 py-8 sm:py-10">
+
+    <!-- Tela Inicial / Hero -->
+    <section id="hero-section" class="no-print bg-white rounded-3xl border border-slate-200/80 shadow-sm p-6 sm:p-10 mb-8 animate-fade-in">
+      <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-indigo-50 text-indigo-700 text-xs font-bold mb-4">
+        <span>⚡</span> Simulador Interativo de Negócios
+      </div>
+      <h1 class="text-3xl sm:text-4xl font-extrabold text-slate-900 tracking-tight leading-tight mb-3">
+        Empreenda! – Crie sua empresa em 5 minutos
+      </h1>
+      <p class="text-slate-600 text-base sm:text-lg max-w-2xl mb-6 leading-relaxed">
+        Responda a <strong class="text-slate-800">5 perguntas rápidas</strong> e saia com a identidade da sua marca, plano de ação e estimativa financeira prontos para apresentar ou levar para casa.
+      </p>
+
+      <div class="grid grid-cols-2 sm:grid-cols-5 gap-2.5 mb-7 text-xs">
+        <div class="p-3 rounded-2xl bg-slate-50 border border-slate-100">
+          <span class="font-extrabold text-indigo-600 block mb-0.5">01. Nome</span>
+          <span class="text-slate-600">Marca &amp; slogan</span>
+        </div>
+        <div class="p-3 rounded-2xl bg-slate-50 border border-slate-100">
+          <span class="font-extrabold text-indigo-600 block mb-0.5">02. Segmento</span>
+          <span class="text-slate-600">Área de atuação</span>
+        </div>
+        <div class="p-3 rounded-2xl bg-slate-50 border border-slate-100">
+          <span class="font-extrabold text-indigo-600 block mb-0.5">03. Público</span>
+          <span class="text-slate-600">Quem vai comprar</span>
+        </div>
+        <div class="p-3 rounded-2xl bg-slate-50 border border-slate-100">
+          <span class="font-extrabold text-indigo-600 block mb-0.5">04. Capital</span>
+          <span class="text-slate-600">Investimento inicial</span>
+        </div>
+        <div class="p-3 rounded-2xl bg-slate-50 border border-slate-100 col-span-2 sm:col-span-1">
+          <span class="font-extrabold text-indigo-600 block mb-0.5">05. Divulgação</span>
+          <span class="text-slate-600">Canais de venda</span>
+        </div>
+      </div>
+
+      <div class="flex flex-wrap items-center gap-4">
+        <button
+          id="start-btn"
+          type="button"
+          onclick="startWizard()"
+          class="px-6 py-3.5 rounded-2xl bg-indigo-600 hover:bg-indigo-700 text-white font-bold text-sm sm:text-base shadow-md shadow-indigo-200 transition cursor-pointer"
+        >
+          Começar minha empresa →
+        </button>
+        <button
+          type="button"
+          onclick="fillRandomDemo()"
+          class="px-4 py-3.5 rounded-2xl bg-slate-100 hover:bg-slate-200 text-slate-700 font-semibold text-sm transition cursor-pointer"
+        >
+          🎲 Gerar exemplo rápido
+        </button>
+      </div>
+    </section>
+
+    <!-- Assistente de 5 Etapas -->
+    <section id="wizard-section" class="no-print hidden bg-white rounded-3xl border border-slate-200/80 shadow-sm p-6 sm:p-10 animate-fade-in">
+      <!-- Barra de Progresso -->
+      <div class="mb-8">
+        <div class="flex items-center justify-between text-xs font-bold text-slate-500 mb-2">
+          <span id="step-indicator">ETAPA 1 DE 5</span>
+          <span id="step-percent">20%</span>
+        </div>
+        <div class="w-full h-2.5 bg-slate-100 rounded-full overflow-hidden">
+          <div id="progress-bar" class="h-full bg-indigo-600 rounded-full transition-all duration-300" style="width: 20%"></div>
+        </div>
+      </div>
+
+      <!-- Pergunta 1: Nome -->
+      <div id="step-1" class="step-panel space-y-5">
+        <div>
+          <span class="text-xs font-bold uppercase tracking-wider text-indigo-600">Pergunta 1 de 5</span>
+          <h2 class="text-2xl sm:text-3xl font-extrabold text-slate-900 mt-1">
+            Qual será o nome da empresa?
+          </h2>
+          <p class="text-slate-500 text-sm mt-1">
+            Digite o nome que você imaginou ou clique no botão para sortear uma ideia na hora.
+          </p>
+        </div>
+
+        <div>
+          <label for="company-name" class="block text-sm font-bold text-slate-700 mb-2">Nome da empresa *</label>
+          <div class="flex flex-col sm:flex-row gap-2.5">
+            <input
+              id="company-name"
+              type="text"
+              maxlength="45"
+              placeholder="Ex.: Café & Código, Solarize, Ateliê Raiz..."
+              class="flex-1 px-4 py-3 rounded-xl border border-slate-300 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 text-base font-medium"
+            />
+            <button
+              type="button"
+              onclick="suggestNameAndSlogan()"
+              class="px-4 py-3 rounded-xl bg-slate-100 hover:bg-slate-200 text-slate-800 font-bold text-sm whitespace-nowrap transition cursor-pointer"
+            >
+              ✨ Sugerir nome
+            </button>
+          </div>
+          <p id="step1-error" class="text-rose-600 text-xs font-semibold mt-2 hidden">
+            Por favor, informe um nome para a sua empresa antes de avançar.
+          </p>
+        </div>
+
+        <div>
+          <label for="company-slogan" class="block text-sm font-bold text-slate-700 mb-2">
+            Slogan ou frase de impacto <span class="text-slate-400 font-normal">(opcional)</span>
+          </label>
+          <input
+            id="company-slogan"
+            type="text"
+            maxlength="80"
+            placeholder="Ex.: Energia limpa ao alcance de todos"
+            class="w-full px-4 py-3 rounded-xl border border-slate-300 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 text-sm"
+          />
+        </div>
+
+        <div>
+          <label for="founder-name" class="block text-sm font-bold text-slate-700 mb-2">
+            Seu nome (Fundador/a) <span class="text-slate-400 font-normal">(opcional)</span>
+          </label>
+          <input
+            id="founder-name"
+            type="text"
+            maxlength="50"
+            placeholder="Ex.: Marina Silva"
+            class="w-full px-4 py-3 rounded-xl border border-slate-300 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 text-sm"
+          />
+        </div>
+      </div>
+
+      <!-- Pergunta 2: Segmento -->
+      <div id="step-2" class="step-panel hidden space-y-5">
+        <div>
+          <span class="text-xs font-bold uppercase tracking-wider text-indigo-600">Pergunta 2 de 5</span>
+          <h2 class="text-2xl sm:text-3xl font-extrabold text-slate-900 mt-1">
+            Qual será o segmento?
+          </h2>
+          <p class="text-slate-500 text-sm mt-1">
+            Escolha a área principal de atuação. Isso define o estilo visual e a estrutura do seu negócio.
+          </p>
+        </div>
+
+        <div id="segments-grid" class="grid grid-cols-1 sm:grid-cols-2 gap-3"></div>
+      </div>
+
+      <!-- Pergunta 3: Público-alvo -->
+      <div id="step-3" class="step-panel hidden space-y-5">
+        <div>
+          <span class="text-xs font-bold uppercase tracking-wider text-indigo-600">Pergunta 3 de 5</span>
+          <h2 class="text-2xl sm:text-3xl font-extrabold text-slate-900 mt-1">
+            Quem será seu público-alvo?
+          </h2>
+          <p class="text-slate-500 text-sm mt-1">
+            Selecione um ou mais perfis de clientes que mais se beneficiam da sua solução.
+          </p>
+        </div>
+
+        <div id="audiences-grid" class="grid grid-cols-1 sm:grid-cols-2 gap-3"></div>
+
+        <div>
+          <label for="audience-detail" class="block text-sm font-bold text-slate-700 mb-2">
+            Detalhe extra do cliente ideal <span class="text-slate-400 font-normal">(opcional)</span>
+          </label>
+          <input
+            id="audience-detail"
+            type="text"
+            maxlength="90"
+            placeholder="Ex.: Moradores de bairros universitários que buscam praticidade"
+            class="w-full px-4 py-3 rounded-xl border border-slate-300 focus:outline-none focus:ring-2 focus:ring-indigo-500 text-sm"
+          />
+        </div>
+      </div>
+
+      <!-- Pergunta 4: Investimento inicial -->
+      <div id="step-4" class="step-panel hidden space-y-6">
+        <div>
+          <span class="text-xs font-bold uppercase tracking-wider text-indigo-600">Pergunta 4 de 5</span>
+          <h2 class="text-2xl sm:text-3xl font-extrabold text-slate-900 mt-1">
+            Qual será o investimento inicial?
+          </h2>
+          <p class="text-slate-500 text-sm mt-1">
+            Defina o capital estimado para começar. Usaremos esse valor na projeção inicial da empresa.
+          </p>
+        </div>
+
+        <div class="p-6 rounded-2xl bg-slate-50 border border-slate-200/80 text-center">
+          <div class="text-xs font-bold uppercase tracking-wider text-slate-400 mb-1">Capital inicial estimado</div>
+          <div id="capital-display" class="text-3xl sm:text-4xl font-extrabold text-slate-900 mb-4">R$ 5.000</div>
+          <input
+            id="capital-range"
+            type="range"
+            min="500"
+            max="100000"
+            step="500"
+            value="5000"
+            oninput="updateCapitalFromRange(this.value)"
+            class="w-full accent-indigo-600 cursor-pointer"
+          />
+          <div class="flex justify-between text-xs text-slate-400 font-semibold mt-1">
+            <span>R$ 500</span>
+            <span>R$ 25.000</span>
+            <span>R$ 50.000</span>
+            <span>R$ 100.000</span>
+          </div>
+        </div>
+
+        <div class="flex flex-wrap gap-2">
+          <button type="button" onclick="setCapitalPreset(1000)" class="px-3.5 py-2 rounded-xl text-xs font-bold bg-slate-100 hover:bg-slate-200 text-slate-700 cursor-pointer">R$ 1.000 (Enxuto)</button>
+          <button type="button" onclick="setCapitalPreset(5000)" class="px-3.5 py-2 rounded-xl text-xs font-bold bg-slate-100 hover:bg-slate-200 text-slate-700 cursor-pointer">R$ 5.000 (Inicial)</button>
+          <button type="button" onclick="setCapitalPreset(15000)" class="px-3.5 py-2 rounded-xl text-xs font-bold bg-slate-100 hover:bg-slate-200 text-slate-700 cursor-pointer">R$ 15.000 (Estruturado)</button>
+          <button type="button" onclick="setCapitalPreset(50000)" class="px-3.5 py-2 rounded-xl text-xs font-bold bg-slate-100 hover:bg-slate-200 text-slate-700 cursor-pointer">R$ 50.000 (Escala)</button>
+        </div>
+      </div>
+
+      <!-- Pergunta 5: Divulgação -->
+      <div id="step-5" class="step-panel hidden space-y-5">
+        <div>
+          <span class="text-xs font-bold uppercase tracking-wider text-indigo-600">Pergunta 5 de 5</span>
+          <h2 class="text-2xl sm:text-3xl font-extrabold text-slate-900 mt-1">
+            Como será feita a divulgação?
+          </h2>
+          <p class="text-slate-500 text-sm mt-1">
+            Escolha os canais que você vai ativar para atrair os primeiros clientes.
+          </p>
+        </div>
+
+        <div id="channels-grid" class="grid grid-cols-1 sm:grid-cols-2 gap-3"></div>
+      </div>
+
+      <!-- Navegação do Wizard -->
+      <div class="mt-8 pt-6 border-t border-slate-100 flex items-center justify-between gap-3">
+        <button
+          id="prev-btn"
+          type="button"
+          onclick="prevStep()"
+          class="px-5 py-2.5 rounded-xl border border-slate-200 hover:bg-slate-50 text-slate-700 font-bold text-sm transition cursor-pointer"
+        >
+          ← Voltar
+        </button>
+
+        <button
+          id="next-btn"
+          type="button"
+          onclick="nextStep()"
+          class="px-6 py-3 rounded-xl bg-indigo-600 hover:bg-indigo-700 text-white font-bold text-sm shadow-sm transition cursor-pointer"
+        >
+          Próxima pergunta →
+        </button>
+      </div>
+    </section>
+
+    <!-- Resultado Final: Perfil, Identidade, Planejamento e Estimativa Financeira -->
+    <section id="result-section" class="hidden space-y-6 animate-fade-in">
+      <!-- Barra de ações -->
+      <div class="no-print flex flex-wrap items-center justify-between gap-3 bg-white p-4 rounded-2xl border border-slate-200 shadow-sm">
+        <div class="flex items-center gap-2 text-sm font-bold text-emerald-700">
+          <span class="w-6 h-6 rounded-full bg-emerald-100 text-emerald-700 flex items-center justify-center text-xs">✓</span>
+          Empresa criada com sucesso!
+        </div>
+        <div class="flex flex-wrap gap-2">
+          <button
+            type="button"
+            onclick="editAnswers()"
+            class="px-3.5 py-2 rounded-xl border border-slate-200 hover:bg-slate-50 text-slate-700 text-xs font-bold transition cursor-pointer"
+          >
+            Editar respostas
+          </button>
+          <button
+            type="button"
+            onclick="copySummaryText()"
+            class="px-3.5 py-2 rounded-xl bg-slate-100 hover:bg-slate-200 text-slate-800 text-xs font-bold transition cursor-pointer"
+          >
+            📋 Copiar resumo
+          </button>
+          <button
+            type="button"
+            onclick="window.print()"
+            class="px-3.5 py-2 rounded-xl bg-slate-900 hover:bg-slate-800 text-white text-xs font-bold transition cursor-pointer"
+          >
+            🖨️ Imprimir / Salvar PDF
+          </button>
+        </div>
+      </div>
+
+      <!-- Cartão / Dossiê Principal -->
+      <div id="dossier-card" class="print-only-container bg-white rounded-3xl border border-slate-200/90 shadow-sm overflow-hidden">
+        <!-- Cabeçalho da Marca -->
+        <div id="brand-banner" class="p-6 sm:p-8 text-white bg-indigo-600 transition-colors duration-300">
+          <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-6">
+            <div class="flex items-center gap-4">
+              <div id="svg-logo-container" class="w-20 h-20 rounded-2xl bg-white/15 backdrop-blur-sm border border-white/25 flex items-center justify-center shrink-0"></div>
+              <div>
+                <div class="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full bg-white/20 text-xs font-bold mb-1.5">
+                  <span id="res-segment-icon">🚀</span>
+                  <span id="res-segment-name">Tecnologia &amp; Apps</span>
+                </div>
+                <h2 id="res-company-name" class="text-2xl sm:text-4xl font-extrabold tracking-tight">Nome da Empresa</h2>
+                <p id="res-company-slogan" class="text-white/90 text-sm sm:text-base mt-1 italic">"Seu slogan aparecerá aqui"</p>
+              </div>
+            </div>
+
+            <div class="bg-black/15 rounded-2xl p-3.5 text-left sm:text-right shrink-0">
+              <div class="text-[11px] uppercase tracking-wider text-white/75 font-semibold">Fundador(a)</div>
+              <div id="res-founder" class="font-bold text-sm">Empreendedor(a) da Feira</div>
+              <div id="res-date" class="text-xs text-white/75 mt-0.5"></div>
+            </div>
+          </div>
+        </div>
+
+        <div class="p-6 sm:p-8 space-y-8">
+          <!-- 1. Identidade da Empresa -->
+          <div>
+            <h3 class="text-xs font-extrabold uppercase tracking-wider text-slate-400 mb-3">
+              01 · Identidade da Empresa
+            </h3>
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+              <div class="p-4 rounded-2xl bg-slate-50 border border-slate-100 md:col-span-2">
+                <div class="text-xs font-bold text-slate-500 mb-1">Proposta de Valor</div>
+                <p id="res-value-prop" class="text-sm text-slate-800 leading-relaxed font-medium"></p>
+              </div>
+              <div class="p-4 rounded-2xl bg-slate-50 border border-slate-100">
+                <div class="text-xs font-bold text-slate-500 mb-2">Paleta da Marca</div>
+                <div id="res-palette" class="flex items-center gap-2"></div>
+              </div>
+            </div>
+          </div>
+
+          <!-- 2. Planejamento Estratégico -->
+          <div>
+            <h3 class="text-xs font-extrabold uppercase tracking-wider text-slate-400 mb-3">
+              02 · Planejamento Estratégico
+            </h3>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
+              <div class="p-4 rounded-2xl border border-slate-200/80">
+                <div class="text-xs font-bold text-slate-500 mb-2">Público-Alvo Definido</div>
+                <div id="res-audiences" class="flex flex-wrap gap-1.5 mb-2"></div>
+                <p id="res-audience-detail" class="text-xs text-slate-600"></p>
+              </div>
+              <div class="p-4 rounded-2xl border border-slate-200/80">
+                <div class="text-xs font-bold text-slate-500 mb-2">Canais de Divulgação</div>
+                <div id="res-channels" class="flex flex-wrap gap-1.5"></div>
+              </div>
+            </div>
+
+            <div class="p-5 rounded-2xl bg-slate-50 border border-slate-100">
+              <div class="text-xs font-bold text-slate-700 mb-3">Primeiros 3 passos para tirar do papel</div>
+              <ol id="res-next-steps" class="space-y-2 text-sm text-slate-700 list-decimal list-inside"></ol>
+            </div>
+          </div>
+
+          <!-- 3. Estimativa Financeira -->
+          <div>
+            <div class="flex flex-wrap items-center justify-between gap-2 mb-3">
+              <h3 class="text-xs font-extrabold uppercase tracking-wider text-slate-400">
+                03 · Estimativa Financeira Inicial (Simulação)
+              </h3>
+              <span class="text-[11px] text-slate-400 font-medium">* Valores ilustrativos baseados no segmento e capital</span>
+            </div>
+
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3.5 mb-4">
+              <div class="p-4 rounded-2xl bg-slate-50 border border-slate-200/70">
+                <div class="text-xs font-semibold text-slate-500">Investimento Inicial</div>
+                <div id="fin-capital" class="text-xl font-extrabold text-slate-900 mt-1">R$ 0</div>
+              </div>
+              <div class="p-4 rounded-2xl bg-slate-50 border border-slate-200/70">
+                <div class="text-xs font-semibold text-slate-500">Receita Mensal Estimada</div>
+                <div id="fin-revenue" class="text-xl font-extrabold text-emerald-600 mt-1">R$ 0</div>
+              </div>
+              <div class="p-4 rounded-2xl bg-slate-50 border border-slate-200/70">
+                <div class="text-xs font-semibold text-slate-500">Custo Mensal Estimado</div>
+                <div id="fin-cost" class="text-xl font-extrabold text-rose-600 mt-1">R$ 0</div>
+              </div>
+              <div class="p-4 rounded-2xl bg-slate-50 border border-slate-200/70">
+                <div class="text-xs font-semibold text-slate-500">Retorno Estimado (Payback)</div>
+                <div id="fin-payback" class="text-xl font-extrabold text-indigo-600 mt-1">-- meses</div>
+              </div>
+            </div>
+
+            <div class="p-4 rounded-2xl border border-slate-200/80 bg-white">
+              <div class="text-xs font-bold text-slate-600 mb-3">Sugestão de alocação do investimento inicial</div>
+              <div id="fin-allocation" class="space-y-2.5 text-xs"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- Modal de Histórico da Feira -->
+  <div id="history-modal" class="no-print fixed inset-0 z-50 hidden bg-slate-900/50 backdrop-blur-xs flex items-center justify-center p-4">
+    <div class="bg-white rounded-3xl max-w-lg w-full max-h-[80vh] flex flex-col shadow-xl border border-slate-200 overflow-hidden">
+      <div class="p-5 border-b border-slate-100 flex items-center justify-between">
+        <h3 class="font-extrabold text-slate-900">Empresas criadas nesta sessão</h3>
+        <button type="button" onclick="toggleHistoryModal()" class="text-slate-400 hover:text-slate-700 font-bold text-lg px-2 cursor-pointer">✕</button>
+      </div>
+      <div id="history-list" class="p-5 overflow-y-auto space-y-3 flex-1 text-sm"></div>
+      <div class="p-4 border-t border-slate-100 flex justify-between items-center bg-slate-50">
+        <button type="button" onclick="clearHistory()" class="text-xs font-bold text-rose-600 hover:underline cursor-pointer">
+          Limpar histórico
+        </button>
+        <button type="button" onclick="toggleHistoryModal()" class="px-4 py-2 rounded-xl bg-slate-900 text-white text-xs font-bold cursor-pointer">
+          Fechar
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Toast de aviso -->
+  <div id="toast" class="no-print fixed bottom-5 right-5 z-50 hidden px-4 py-2.5 rounded-xl bg-slate-900 text-white text-xs font-bold shadow-lg"></div>
+
+  <script src="script.js"></script>
+</body>
+</html>
